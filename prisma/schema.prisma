@@ -20,6 +20,7 @@ model Customer {
 model Company {
   id        Int        @id @default(autoincrement())
   name      String     @unique
+  adress    String? 
   customers Customer[]
   Order     Order[]
   Product   Product[]
