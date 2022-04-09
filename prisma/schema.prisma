@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:Pd8379Hg!@h.gozutok.info:5432/SaleManager?schema=public"
+  url      = process.env.DATABASE_URL
 }
 
 model Customer {
