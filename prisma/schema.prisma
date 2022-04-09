@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:Pd8379Hg!@h.gozutok.info:5432/SaleManager?schema=public"
+}
+
+model Customer {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  name       String?
+  orders     Order[]
+  customerId Int
+  Company    Company? @relation(fields: [companyId], references: [id])
+  companyId  Int?
+}
+
+model Company {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  customers Customer[]
+  Order     Order[]
+  Product   Product[]
+}
+
+model Order {
+  id         Int      @id @default(autoincrement())
+  amount     Int
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+  companyId  Int
+  company    Company  @relation(fields: [companyId], references: [id])
+
+
+  OrderDetail OrderDetail[]
+}
+
+model OrderDetail {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
+}
+
+model Product {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  price       Int
+  companyId   Int
+  company     Company       @relation(fields: [companyId], references: [id])
+  OrderDetail OrderDetail[]
+}
