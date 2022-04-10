@@ -1,7 +1,12 @@
 import Layout from "../components/Layout";
 import Company from "../components/Company";
+import { useEffect } from "react";
 
-const Blog = (props) => {
+const Home = (props) => {
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
+
   return (
     <Layout>
       <div className="page">
@@ -40,4 +45,4 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default Blog;
+export default Home;
