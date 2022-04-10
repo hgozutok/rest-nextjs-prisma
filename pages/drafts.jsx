@@ -1,13 +1,13 @@
-import Layout from '../components/Layout'
-import Post from '../components/Post'
+import Layout from "../components/Layout";
+import Post from "../components/Post";
 
-const Drafts = props => {
+const Drafts = (props) => {
   return (
     <Layout>
       <div className="page">
         <h1>Drafts</h1>
         <main>
-          {props.drafts.map(post => (
+          {props.drafts.map((post) => (
             <div key={post.id} className="post">
               <Post post={post} />
             </div>
@@ -29,15 +29,15 @@ const Drafts = props => {
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
 export const getServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/drafts')
-  const drafts = await res.json()
+  const res = await fetch(process.env.BASE_URL + "/api/drafts");
+  const drafts = await res.json();
   return {
     props: { drafts },
-  }
-}
+  };
+};
 
-export default Drafts
+export default Drafts;
