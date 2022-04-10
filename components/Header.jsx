@@ -1,29 +1,29 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Header = () => {
-  const router = useRouter()
+  const router = useRouter();
 
-  const isActive = (pathname) => router.pathname === pathname
+  const isActive = (pathname) => router.pathname === pathname;
 
-  return(
+  return (
     <nav>
       <div className="left">
         <Link href="/">
-          <a className="bold" data-active={isActive('/')}>
+          <a className="bold" data-active={isActive("/")}>
             Blog
           </a>
         </Link>
         <Link href="/drafts">
-          <a data-active={isActive('/drafts')}>Drafts</a>
+          <a data-active={isActive("/drafts")}>Drafts</a>
         </Link>
       </div>
       <div className="right">
         <Link href="/signup">
-          <a data-active={isActive('/signup')}>Signup</a>
+          <a data-active={isActive("/signup")}>Signup</a>
         </Link>
-        <Link href="/create">
-          <a data-active={isActive('/create')}>+ Create draft</a>
+        <Link href="/user/login">
+          <a data-active={isActive("/user/login")}>Login</a>
         </Link>
       </div>
       <style jsx>{`
@@ -43,7 +43,7 @@ const Header = () => {
           display: inline-block;
         }
 
-        .left a[data-active='true'] {
+        .left a[data-active="true"] {
           color: gray;
         }
 
@@ -62,7 +62,7 @@ const Header = () => {
         }
       `}</style>
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

@@ -3,14 +3,14 @@ import Layout from "../../components/Layout";
 import Router from "next/router";
 
 async function publish(id) {
-  await fetch(process.env.BASE_URL + `/api/company/${id}`, {
+  await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/company/${id}`, {
     method: "PUT",
   });
   await Router.push("/");
 }
 
 async function destroy(id) {
-  await fetch(process.env.BASE_URL + `/api/company/${id}`, {
+  await fetch(process.env.NEXT_PUBLIC_BASE_URL + `/api/company/${id}`, {
     method: "DELETE",
   });
   await Router.push("/");
@@ -55,7 +55,7 @@ const Company = (props) => {
 
 export const getServerSideProps = async (context) => {
   const res = await fetch(
-    process.env.BASE_URL + `/api/company/${context.params.id}`
+    process.env.NEXT_PUBLIC_BASE_URL + `/api/company/${context.params.id}`
   );
   const data = await res.json();
   return { props: { ...data } };

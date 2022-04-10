@@ -33,7 +33,7 @@ const Drafts = (props) => {
 };
 
 export const getServerSideProps = async () => {
-  const res = await fetch(process.env.BASE_URL + "/api/drafts");
+  const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/drafts");
   const drafts = await res.json();
   return {
     props: { drafts },

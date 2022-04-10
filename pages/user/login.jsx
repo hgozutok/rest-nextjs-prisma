@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import Router from "next/router";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 
-const SignUp = () => {
-  const [name, setName] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [regUrl, setRegUrl] = useState(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/register`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/login`
   );
   const submitData = async (e) => {
     e.preventDefault();
     try {
-      const body = { name, email, password };
+      const body = { email, password };
       var result = await fetch(regUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,14 +28,8 @@ const SignUp = () => {
     <Layout>
       <div className="page">
         <form onSubmit={submitData}>
-          <h1>Signup user</h1>
-          <input
-            autoFocus
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name"
-            type="text"
-            value={name}
-          />
+          <h1>Login user</h1>
+
           <input
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
@@ -49,11 +42,7 @@ const SignUp = () => {
             type="password"
             value={password}
           />
-          <input
-            disabled={!name || !email || !password}
-            type="submit"
-            value="Signup"
-          />
+          <input disabled={!email || !password} type="submit" value="Login" />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             or Cancel
           </a>
@@ -96,4 +85,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

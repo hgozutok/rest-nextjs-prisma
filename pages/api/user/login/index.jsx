@@ -1,6 +1,7 @@
 import prisma from "../../../../lib/prisma";
 import bcrypt from "bcrypt";
-import { Jwt } from "jsonwebtoken";
+
+var jwt = require("jsonwebtoken");
 
 export default async function handle(req, res) {
   if (req.method === "POST") {
@@ -28,13 +29,14 @@ async function handlePOST(req, res) {
   if (!isMatch) {
     res.status(401).json({ message: "Password is incorrect" });
   }
-  const token = Jwt.sign({ userId: user.id }, process.env.NEXT_PUBLIC_SECRET, {
+  let token = jwt.sign({ userId: user.id }, process.env.NEXT_PUBLIC_SECRET, {
     expiresIn: "1h",
   });
   let autToken = await prisma.token.create({
     data: {
-      token: jwtToken,
+      token: token,
+      userId: user.id,
     },
   });
-  res.json({ token });
+  res.json({ token: autToken.token });
 }
