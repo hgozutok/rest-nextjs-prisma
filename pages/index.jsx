@@ -38,7 +38,7 @@ const Home = (props) => {
 };
 
 export const getServerSideProps = async () => {
-  const res = await fetch("http://localhost:3000/api/company");
+  const res = await fetch(process.env.BASE_URL + "/api/company");
   const company = await res.json();
   return {
     props: { company },
