@@ -1,8 +1,9 @@
+import authenticated from "../../../components/authenticationCheck";
 import prisma from "../../../lib/prisma";
 
 export default async function handle(req, res) {
   if (req.method === "GET") {
-    handleGET(res);
+    authenticated(handleGET(res));
   } else if (req.method === "POST") {
     handlePOST(req, res);
   } else {

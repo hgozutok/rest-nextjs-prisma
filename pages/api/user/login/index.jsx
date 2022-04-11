@@ -7,9 +7,9 @@ export default async function handle(req, res) {
   if (req.method === "POST") {
     handlePOST(req, res);
   } else {
-    throw new Error(
-      `The HTTP ${req.method} method is not supported at this route.`
-    );
+    res.status(401).json({
+      message: `The HTTP ${req.method} method is not supported at this route.`,
+    });
   }
 }
 

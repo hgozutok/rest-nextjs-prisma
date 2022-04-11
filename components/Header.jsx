@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 const Header = () => {
   const router = useRouter();
@@ -24,6 +25,11 @@ const Header = () => {
         </Link>
         <Link href="/user/login">
           <a data-active={isActive("/user/login")}>Login</a>
+        </Link>
+        <Link href="#">
+          <a onClick={signIn} data-active={isActive("/user/login")}>
+            Login
+          </a>
         </Link>
       </div>
       <style jsx>{`

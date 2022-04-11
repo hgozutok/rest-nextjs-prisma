@@ -1,8 +1,10 @@
 import Layout from "../components/Layout";
 import Company from "../components/Company";
 import { useEffect } from "react";
+import { useSession, getSession } from "next-auth/react";
 
 const Home = (props) => {
+  const session = useSession();
   useEffect(() => {
     console.log(props);
   }, [props]);
@@ -12,6 +14,8 @@ const Home = (props) => {
       <div className="page">
         <h1>My Blog</h1>
         <main>
+          {JSON.stringify(session)}
+          {JSON.stringify(props.session)}
           {props.company.map((company) => (
             <div key={company.id} className="company">
               <Company company={company} />
@@ -37,11 +41,11 @@ const Home = (props) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/company");
   const company = await res.json();
   return {
-    props: { company },
+    props: { company, session: await getSession(context) },
   };
 };
 
