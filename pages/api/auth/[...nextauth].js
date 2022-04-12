@@ -6,7 +6,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-//const prisma = new PrismaClient();
 
 const options = {
   adapter: PrismaAdapter(prisma),
