@@ -32,11 +32,12 @@ async function handlePOST(req, res) {
   let token = jwt.sign({ userId: user.id }, process.env.NEXT_PUBLIC_SECRET, {
     expiresIn: "1h",
   });
-  let autToken = await prisma.token.create({
+  let autToken = await prisma.verificationToken.create({
     data: {
       token: token,
-      userId: user.id,
+      identifier: user.id,
+      expires: new Date(Date.now() + 60 * 60 * 24),
     },
   });
-  res.json({ token: autToken.token });
+  res.json({ ...user, token: autToken });
 }
