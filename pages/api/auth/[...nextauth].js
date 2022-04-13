@@ -13,8 +13,6 @@ const options = {
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      //  callbackUrl: process.env.GITHUB_CALLBACK_URL,
-      //    scope: ["user:email"],
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -28,25 +26,6 @@ const options = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // const user = await fetch(
-        //   process.env.NEXT_PUBLIC_BASE_URL + "/api/user/login",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: {
-        //       email: credentials.username,
-        //       password: credentials.password,
-        //     },
-        //   }
-        // )
-        //   .then((res) => res.json())
-        //   .then((data) => data.user);
-        // if (!user) {
-        //   return null;
-        // } else return user;
-
         try {
           const user = await prisma.user.findUnique({
             where: {
@@ -60,21 +39,6 @@ const options = {
           );
 
           if (compare) {
-            // let token = jwt.sign(
-            //   { userId: user.id },
-            //   process.env.NEXT_PUBLIC_SECRET,
-            //   {
-            //     expiresIn: "1h",
-            //   }
-            // );
-            // let autToken = await prisma.verificationToken.create({
-            //   data: {
-            //     token: token,
-            //     identifier: user.id,
-            //     expires: new Date(Date.now() + 60 * 60 * 24),
-            //   },
-            // });
-
             return { ...user, password: undefined };
           } else {
             return null;
@@ -103,7 +67,7 @@ const options = {
     // },
     async session({ session, token, account }) {
       let utoken = jwt.sign(
-        { userId: token.sub },
+        { userId: token.sub, email: "spring&hugo" },
         process.env.NEXT_PUBLIC_SECRET,
         {
           expiresIn: "1h",
@@ -132,10 +96,16 @@ const options = {
           expires: new Date(Date.now() + 60 * 60 * 24),
         },
       });
-
-      session.accessToken = utoken;
-      console.log("sesaccount", session);
-      return session;
+      if (autToken) {
+        session.accessToken = utoken;
+        session = {
+          ...session,
+          ...account,
+          token: utoken,
+        };
+        console.log("sesaccount", session);
+        return session;
+      }
     },
   },
   //   callbacks: {
