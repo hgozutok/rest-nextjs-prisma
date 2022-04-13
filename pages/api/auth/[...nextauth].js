@@ -67,7 +67,7 @@ const options = {
     // },
     async session({ session, token, account }) {
       let utoken = jwt.sign(
-        { userId: token.sub, email: "spring&hugo" },
+        { userId: token.sub, email: "spring&hugo", developer: "hugo" },
         process.env.NEXT_PUBLIC_SECRET,
         {
           expiresIn: "1h",
